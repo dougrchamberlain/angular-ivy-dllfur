@@ -16,7 +16,8 @@ export class LootLeaderboardComponent implements OnInit {
   loot: any = [];
 
   database: any;
-  users: Promise<firebase.database.DataSnapshot>;
+  users: any;
+  app: any;
   constructor(private readonly http: HttpClient) {
     // Your web app's Firebase configuration
     // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -38,19 +39,16 @@ export class LootLeaderboardComponent implements OnInit {
     };
     // Initialize Firebase
     try {
-      this.database = firebase.initializeApp(
-        firebaseConfig,
-        CURRENT_APP
-      ).database;
+      this.app = firebase.initializeApp(firebaseConfig, CURRENT_APP);
     } catch (err) {
-      console.log(err);
+      this.app = firebase.app(CURRENT_APP);
       //i probably need to return something?
     }
-    this.database = firebase.app(CURRENT_APP).database;
     console.log(this.database);
     // firebase.analytics();
 
-    this.database
+    firebase
+      .database(this.app)
       .ref('users')
       .get()
       .then(d => console.log(d));
@@ -60,8 +58,11 @@ export class LootLeaderboardComponent implements OnInit {
 
   //make this function work
   writeUserData() {
-    this.database.ref('users/2').set({
-      username: 'doug'
-    });
+    firebase
+      .database(this.app)
+      .ref('users/2')
+      .set({
+        username: 'doug'
+      });
   }
 }
