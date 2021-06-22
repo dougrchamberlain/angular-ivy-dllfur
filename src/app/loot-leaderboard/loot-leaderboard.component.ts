@@ -14,7 +14,7 @@ const CURRENT_APP = 'pirates-friend';
 })
 export class LootLeaderboardComponent implements OnInit {
   loot: any = [];
-  app: any;
+
   database: any;
   users: Promise<firebase.database.DataSnapshot>;
   constructor(private readonly http: HttpClient) {
@@ -38,30 +38,30 @@ export class LootLeaderboardComponent implements OnInit {
     };
     // Initialize Firebase
     try {
-      this.app = firebase.initializeApp(firebaseConfig, CURRENT_APP);
+      this.database = firebase.initializeApp(
+        firebaseConfig,
+        CURRENT_APP
+      ).database;
     } catch (err) {
       console.log(err);
-      this.app = firebase.app(CURRENT_APP);
       //i probably need to return something?
     }
+    this.database = firebase.app(CURRENT_APP).database;
+    console.log(this.database);
     // firebase.analytics();
 
-    firebase
-      .database()
+    this.database
       .ref('users')
       .get()
-      .then(console.log);
+      .then(d => console.log(d));
 
     console.log(this.users);
   }
 
   //make this function work
   writeUserData() {
-    firebase
-      .database()
-      .ref('users/2')
-      .set({
-        username: 'doug'
-      });
+    this.database.ref('users/2').set({
+      username: 'doug'
+    });
   }
 }
