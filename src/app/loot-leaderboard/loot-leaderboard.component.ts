@@ -1,8 +1,9 @@
+import { firebase } from 'firebase/app';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+
 // Firebase App (the core Firebase SDK) is always required and must be listed first
-import firebase from 'firebase/app';
-import database from 'firebase/database';
+
 // If you are using v7 or any earlier version of the JS SDK, you should import firebase using namespace import
 // import * as firebase from "firebase/app"
 
@@ -15,9 +16,9 @@ const CURRENT_APP = 'pirates-friend';
 export class LootLeaderboardComponent implements OnInit {
   loot: any = [];
 
-  database: any;
   users: any;
   app: any;
+
   constructor(private readonly http: HttpClient) {
     // Your web app's Firebase configuration
     // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -39,8 +40,9 @@ export class LootLeaderboardComponent implements OnInit {
     };
     // Initialize Firebase
 
-    firebase.initializeApp(firebaseConfig, CURRENT_APP);
-    this.database = firebase.database();
+    const firebaseApp = firebase.initializeApp(firebaseConfig);
+
+    this.database = firebase.database(firebase.app(CURRENT_APP));
     // firebase.analytics();
 
     console.log(this.database);
@@ -48,11 +50,8 @@ export class LootLeaderboardComponent implements OnInit {
 
   //make this function work
   writeUserData() {
-    firebase
-      .database()
-      .ref('users/2')
-      .set({
-        username: 'doug'
-      });
+    this.database.ref('users/2').set({
+      username: 'doug'
+    });
   }
 }
