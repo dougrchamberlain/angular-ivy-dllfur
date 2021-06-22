@@ -27,7 +27,7 @@ export class LootLeaderboardComponent implements OnInit {
   loot: any = [];
 
   users: any;
-  database: firebase.database.Reference;
+  database: firebase.database.Database;
   app: firebase.app.App;
   constructor(private readonly http: HttpClient) {
     // your web app's Firebase configuration
@@ -57,7 +57,7 @@ export class LootLeaderboardComponent implements OnInit {
       this.app = firebase.initializeApp(firebaseConfig, "foo");
     }
 
-    this.database = this.app.database().ref();
+    this.database = this.app.database();
     // firebase.analytics();
 
     console.log(this.database);
@@ -65,7 +65,8 @@ export class LootLeaderboardComponent implements OnInit {
 
   // make this function work
   writeUserData(): void {
-    console.log();
+
+    this.database.ref("users/1").set({ name: "fiddlesticks" });
   }
 
 }
