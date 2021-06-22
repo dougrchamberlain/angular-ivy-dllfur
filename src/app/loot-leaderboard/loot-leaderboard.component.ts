@@ -1,4 +1,4 @@
-import { firebase } from 'firebase/app';
+import firebase from 'firebase/app';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 
@@ -18,7 +18,7 @@ export class LootLeaderboardComponent implements OnInit {
 
   users: any;
   app: any;
-
+  database: any;
   constructor(private readonly http: HttpClient) {
     // Your web app's Firebase configuration
     // For Firebase JS SDK v7.20.0 and later, measurementId is optional
