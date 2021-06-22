@@ -42,7 +42,7 @@ export class LootLeaderboardComponent implements OnInit {
 
     const firebaseApp = firebase.initializeApp(firebaseConfig);
 
-    this.database = firebase.database(firebase.app(CURRENT_APP));
+    this.database = firebase.database(firebase.app());
     // firebase.analytics();
 
     console.log(this.database);
