@@ -14,13 +14,18 @@ const CURRENT_APP = 'pirates-friend';
 })
 export class LootLeaderboardComponent implements OnInit {
   loot: any = [];
-
+  app: any;
+  database: any;
   constructor(private readonly http: HttpClient) {
     // Your web app's Firebase configuration
     // For Firebase JS SDK v7.20.0 and later, measurementId is optional
     // Your web app's Firebase configuration
     // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-    var firebaseConfig = {
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  }
+
+  ngOnInit() {
+    const firebaseConfig = {
       apiKey: 'AIzaSyAnPCD6oKP_0XuT5ptHlXvNIZlmr1Abuo4',
       authDomain: 'pirates-friend.firebaseapp.com',
       databaseURL: 'https://pirates-friend-default-rtdb.firebaseio.com',
@@ -32,17 +37,16 @@ export class LootLeaderboardComponent implements OnInit {
     };
     // Initialize Firebase
     try {
-      firebase.initializeApp(CURRENT_APP);
+      this.app = firebase.initializeApp(firebaseConfig, CURRENT_APP);
     } catch (err) {
-      firebase.app(CURRENT_APP);
+      console.log(err);
+      this.app = firebase.app(CURRENT_APP);
       //i probably need to return something?
     }
     // firebase.analytics();
-  }
 
-  ngOnInit() {
-    let users = firebase
-      .database()
+    firebase
+      .database(this.app)
       .ref('users')
       .get();
   }
@@ -50,7 +54,7 @@ export class LootLeaderboardComponent implements OnInit {
   //make this function work
   writeUserData() {
     firebase
-      .database()
+      .database(this.app)
       .ref('users/2')
       .set({
         username: 'doug'
