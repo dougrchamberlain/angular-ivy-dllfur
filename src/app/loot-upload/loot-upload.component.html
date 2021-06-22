@@ -1,0 +1,26 @@
+<input type="file" (change)="fileChange($event)" placeholder="Upload file" accept="*.png,*.jpg">
+
+
+<mat-card>
+  <img mat-card-image [src]="imageSrc">
+</mat-card>
+<mat-form-field>
+  <mat-label>Where are you?</mat-label>
+  <input matInput placeholder="location" [(ngModel)]="loot.location">
+  <mat-icon matSuffix>map</mat-icon>
+  <mat-hint>^^ this will be figured out from GPS : eventually</mat-hint>
+</mat-form-field>
+<mat-form-field>
+  <input matInput [matDatepicker]="picker" [(ngModel)]="loot.date" >
+  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+  <mat-datepicker #picker></mat-datepicker>
+</mat-form-field>
+<mat-button-toggle-group [(ngModel)]="loot.type" name="fontStyle" aria-label="Font Style">
+  <mat-button-toggle value="treasure">treasure</mat-button-toggle>
+  <mat-button-toggle value="unknown">not sure</mat-button-toggle>
+  <mat-button-toggle value="trash">trash</mat-button-toggle>
+</mat-button-toggle-group>
+
+<pre>
+  {{loot | json}}
+</pre>
