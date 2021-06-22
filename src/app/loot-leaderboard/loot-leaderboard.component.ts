@@ -34,26 +34,20 @@ export class LootLeaderboardComponent implements OnInit {
       projectId: 'pirates-friend',
       storageBucket: 'pirates-friend.appspot.com',
       messagingSenderId: '311560368568',
-      appId: '1:311560368568:web:0ca4596c7a1215fa76df4d',
+      appId: ':311560368568:web:0ca4596c7a1215fa76df4d',
       measurementId: 'G-FQDEYWJCQR'
     };
     // Initialize Firebase
     try {
-      this.app = firebase.initializeApp(firebaseConfig, CURRENT_APP);
+      this.app = firebase.initializeApp(firebaseConfig);
     } catch (err) {
-      this.app = firebase.app(CURRENT_APP);
+      this.app = firebase.app();
       //i probably need to return something?
     }
-    console.log(this.database);
+    this.database = firebase.database();
     // firebase.analytics();
 
-    firebase
-      .database(this.app)
-      .ref('users')
-      .get()
-      .then(d => console.log(d));
-
-    console.log(this.users);
+    console.log(this.database);
   }
 
   //make this function work
