@@ -17,7 +17,6 @@ import { Component, OnInit } from "@angular/core";
 
 // if you are using v7 or any earlier version of the JS SDK, you should import firebase using namespace import
 // import * as firebase from "firebase/app"
-
 @Component({
   selector: "app-loot-leaderboard",
   templateUrl: "./loot-leaderboard.component.html",
@@ -65,8 +64,26 @@ export class LootLeaderboardComponent implements OnInit {
 
   // make this function work
   writeUserData(): void {
-
-    this.database.ref("users/1").set({ name: "fiddlesticks" });
+    // tslint:disable-next-line:typedef
+    var ref = this.database.ref("server/loot-tracker");
+    ref.child("users").set({
+      alanisawesome: {
+        date_of_birth: "June 23, 1912",
+        full_name: "Alan Turing"
+      },
+      gracehop: {
+        date_of_birth: "December 9, 1906",
+        full_name: "Grace Hopper"
+      }
+    }, (error) => {
+      if (error) {
+        console.log("err");
+        // the write con...
+      } else {
+        console.log("save");
+        // data saved successfully!
+      }
+    });
   }
 
 }
