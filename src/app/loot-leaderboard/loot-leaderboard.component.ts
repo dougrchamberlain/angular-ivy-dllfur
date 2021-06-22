@@ -38,12 +38,8 @@ export class LootLeaderboardComponent implements OnInit {
       measurementId: 'G-FQDEYWJCQR'
     };
     // Initialize Firebase
-    try {
-      this.app = firebase.initializeApp(firebaseConfig);
-    } catch (err) {
-      this.app = firebase.app();
-      //i probably need to return something?
-    }
+
+    firebase.initializeApp(firebaseConfig, CURRENT_APP);
     this.database = firebase.database();
     // firebase.analytics();
 
@@ -53,7 +49,7 @@ export class LootLeaderboardComponent implements OnInit {
   //make this function work
   writeUserData() {
     firebase
-      .database(this.app)
+      .database()
       .ref('users/2')
       .set({
         username: 'doug'
