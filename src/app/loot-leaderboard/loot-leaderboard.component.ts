@@ -1,4 +1,15 @@
+// firebase App (the core Firebase SDK) is always required and must be listed first
 import firebase from "firebase/app";
+// if you are using v7 or any earlier version of the JS SDK, you should import firebase using namespace import
+// import * as firebase from "firebase/app"
+
+// if you enabled Analytics in your project, add the Firebase SDK for Analytics
+import "firebase/analytics";
+
+// add the Firebase products that you want to use
+import "firebase/auth";
+import "firebase/firestore";
+import "firebase/database";
 import { HttpClient } from "@angular/common/http";
 import { Component, OnInit } from "@angular/core";
 
@@ -16,8 +27,8 @@ export class LootLeaderboardComponent implements OnInit {
   loot: any = [];
 
   users: any;
-  app: any;
-  database: any;
+  database: firebase.database.Reference;
+  app: firebase.app.App;
   constructor(private readonly http: HttpClient) {
     // your web app's Firebase configuration
     // for Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -40,9 +51,13 @@ export class LootLeaderboardComponent implements OnInit {
     };
     // initialize Firebase
 
-    const firebaseApp: any = firebase.initializeApp(firebaseConfig);
+    try {
+      this.app = firebase.app();
+    } catch (err: any) {
+      this.app = firebase.initializeApp(firebaseConfig, "foo");
+    }
 
-    this.database = firebase.database(firebaseApp);
+    this.database = this.app.database().ref();
     // firebase.analytics();
 
     console.log(this.database);
@@ -50,11 +65,7 @@ export class LootLeaderboardComponent implements OnInit {
 
   // make this function work
   writeUserData(): void {
-    firebase
-      .database()
-      .ref("users/2")
-      .set({
-        username: "doug"
-      });
+    console.log();
   }
+
 }
